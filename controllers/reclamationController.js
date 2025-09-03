@@ -1,5 +1,5 @@
 
-const reclamationService = require("../services/reclamationService");
+const reclamationService = require("../service/reclamationService");
 
 module.exports.getAllReclamations = async (req, res) => {
     try {

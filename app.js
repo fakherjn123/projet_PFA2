@@ -3,50 +3,58 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
-const http = require('http')
-require('dotenv').config()
-const {connecttoMongoDB} = require("./config/db")
-
+const http = require('http');
+require('dotenv').config();
+const { connecttoMongoDB } = require("./config/db");
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/userRouter');
 var osRouter = require('./routes/osRouter');
 
+// 👉 Ajoute tes nouveaux routers
+var assuranceRouter = require('./routes/assurenceRouter');
+var contratRouter = require('./routes/contratRouter');
+var paiementRouter = require('./routes/paiementRouter');
+var reclamationRouter = require('./routes/reclamationRouter');
+
 var app = express();
 
-// // view engine setup
-// app.set('views', path.join(__dirname, 'views'));
-// app.set('view engine', 'jade');
-
+// Middlewares
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Routes principales
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/os', osRouter);
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
+// 👉 Ajoute ici tes API REST
+app.use('/api/assurances', assuranceRouter);
+app.use('/api/contrats', contratRouter);
+app.use('/api/paiements', paiementRouter);
+app.use('/api/reclamations', reclamationRouter);
+
+// Catch 404
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
+// Error handler
+app.use(function (err, req, res, next) {
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
   res.status(err.status || 500);
-  res.json('error');
+  res.json({ error: err.message });
 });
 
-const server = http.createServer(app)
-server.listen(process.env.PORT,()=>{
-  connecttoMongoDB()
-  console.log("app is runing on port 5000")
-})
+// Démarrage serveur + connexion DB
+const server = http.createServer(app);
+server.listen(process.env.PORT || 5000, () => {
+  connecttoMongoDB();
+  console.log(`✅ Server is running on port ${process.env.PORT || 5000}`);
+});
+
+module.exports = app;

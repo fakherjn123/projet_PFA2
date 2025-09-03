@@ -1,4 +1,4 @@
-const Contrat = require("../models/contrat.model");
+const Contrat = require("../models/contratModel");
 
 exports.createContrat = async (req, res) =>{
 

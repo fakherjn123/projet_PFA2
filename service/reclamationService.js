@@ -1,18 +1,11 @@
+const Reclamation = require("../models/reclamationModel");
 
-let reclamations = [
-    { id: 1, client: "Ahmed", sujet: "Retard de livraison", statut: "En cours" },
-    { id: 2, client: "Sami", sujet: "Erreur de facture", statut: "Résolu" }
-]
+module.exports = {
+    async getAllReclamations() {
+        return await Reclamation.find().populate("client").populate("Contrat");
+    },
 
-module.exports.getAll = async () => {
-    return reclamations
-}
-
-module.exports.create = async (data) => {
-    const newReclamation = {
-        id: reclamations.length + 1,
-        ...data
+    async createReclamation(data) {
+        return await Reclamation.create(data);
     }
-    reclamations.push(newReclamation)
-    return newReclamation
-}
+};
