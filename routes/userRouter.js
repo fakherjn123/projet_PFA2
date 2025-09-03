@@ -8,7 +8,7 @@ router.get('/ahla',function(req,res,next) {
 })
 /* GET home page. */
 router.get('/getAllUsers',requireAuthUser,userController.getAllUsers )
-router.get('/getOrderUsersByAge',requireAuthUser,userController.getOrderUsersByAge )
+router.get('/getUserByAge/:age', requireAuthUser, userController.getUserByAge )
 router.get('/searchUsersByUsername',requireAuthUser,userController.searchUsersByName )
 router.get('/getUserByAgeBetweenXAndY',requireAuthUser,userController.getUserByAgeBetweenXAndY )
 router.get('/getUserByAge/:age',requireAuthUser,userController.getUserByAge )
