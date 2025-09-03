@@ -3,7 +3,9 @@ var router = express.Router();
 const userController = require('../controllers/userController')
 const uploadfile = require('../middlewares/uploadFile')
 const {requireAuthUser} = require("../middlewares/authMiddlewares")
-
+router.get('/ahla',function(req,res,next) {
+    res.json('marhaba')
+})
 /* GET home page. */
 router.get('/getAllUsers',requireAuthUser,userController.getAllUsers )
 router.get('/getOrderUsersByAge',requireAuthUser,userController.getOrderUsersByAge )
