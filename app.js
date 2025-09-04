@@ -40,8 +40,6 @@ app.use('/paiements', paiementRouter);
 app.use('/contrats', contratRouter);
 
 
-
-
 // 👉 Ajoute ici tes API REST
 app.use('/api/assurances', assuranceRouter);
 app.use('/api/contrats', contratRouter);

@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
 const ContratSchema = new mongoose.Schema({
-    client: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-    voiture: { type: mongoose.Schema.Types.ObjectId, ref: 'Car', required: true },
+    client: { type: String , required: true },
+    voiture: { type: String,  required: true },
     type: { type: String, enum: ['vente', 'location'], required: true },
     dateDebut: { type: Date, required: true },
     dateFin: { type: Date, required: true },
