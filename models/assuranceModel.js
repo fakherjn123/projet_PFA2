@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
-const Contrat = require("../models/contratModel");
+const Contrat = require("./contratModel");
 
-const AssuranceSchema = new mongoose.Schema({
+const assuranceSchema = new mongoose.Schema({
     contrat: { type: mongoose.Schema.Types.ObjectId, ref: 'Contrat', required: true }, // Attention au nom du modèle
     numeroPolice: { type: String,  unique: true, trim: true },
     compagnie: { type: String, required: true, trim: true },
@@ -12,11 +12,11 @@ const AssuranceSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 // Vérification cohérence dates
-AssuranceSchema.pre('save', function(next) {
+assuranceSchema.pre('save', function(next) {
   if (this.dateFin <= this.dateDebut) {
     return next(new Error("La date de fin doit être supérieure à la date de début"));
   }
   next();
 });
 
-module.exports = mongoose.model('Assurance', AssuranceSchema);
+module.exports = mongoose.model('assurance', assuranceSchema);
