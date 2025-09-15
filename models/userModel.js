@@ -54,29 +54,22 @@ userSchema.pre("save", async function (next) {
     next(error);
   }
 });
+userSchema.statics.login = async function (email, password) {
+  const cleanEmail = email.trim(); // enlever espaces inutiles
+  const user = await this.findOne({ email: cleanEmail });
 
-userSchema.statics.login = async function (email,password) {
-  try {
-    const user = await this.findOne({email})
-    if(user){
-      const auth = await bcrypt.compare(password,user.password)
-      if(auth){
-        // if(user.etat == false){
-        //   throw new Error("compte desactive");          
-        // }
-        // if(user.ban == false){
-        //   throw new Error("compte banned");          
-        // }
-        return user
-      }
-      throw new Error("incorrect password");      
-    }
+  if (!user) {
     throw new Error("incorrect email");
-    
-  } catch (error) {
-    throw new Error("probleme login");    
   }
-}
+
+  const auth = await bcrypt.compare(password, user.password);
+  if (!auth) {
+    throw new Error("incorrect password");
+  }
+
+  return user;
+};
+
 
 const User = mongoose.model("User", userSchema);
 module.exports = User;
