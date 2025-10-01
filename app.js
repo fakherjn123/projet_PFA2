@@ -12,7 +12,7 @@ var app = express();
 
 // CORS configuration - Permettre toutes les origines pour le développement
 app.use(cors({
-  origin: ['http://localhost:3000', 'http://127.0.0.1:3000'], // ✅ Ajout de 127.0.0.1
+  origin: ['http://localhost:3000', 'http://127.0.0.1:3000', 'http://localhost:5173'], // ✅ Ajout de 127.0.0.1
   credentials: true, 
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"], // ✅ Ajout de PATCH
   allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "Accept", "Origin"] // ✅ Headers supplémentaires
@@ -98,6 +98,7 @@ server.listen(PORT, '0.0.0.0', () => { // ✅ Écoute sur toutes les interfaces
   console.log(`✅ Server is running on http://localhost:${PORT}`);
   console.log(`🔗 Health check: http://localhost:${PORT}/api/health`);
   console.log(`👥 Users endpoint: http://localhost:${PORT}/users`);
+  console.log(`🚗 Cars endpoint: http://localhost:${PORT}/cars`); // ✅ Added cars endpoint log
 });
 
 // ✅ Gestion des erreurs de serveur
